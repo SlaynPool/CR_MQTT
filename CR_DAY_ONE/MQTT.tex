@@ -57,7 +57,35 @@ Le but de ce document est de concentrer une journée de recherche à propos du p
 
 \section{Presentation MQTT}
 Comme vu en cours, MQTT est a la base dévelloppé pour permettre a des capteurs en plein millieu du dessert puissent remonter des données via des laisons sattellites. L'idée de MQTT etait donc d'avoir un protocole qui soit tolérant a la latence, économe en bande passante.\\
-MQTT (Message Queuing Telemetry Transport) est donc très intéresant pour l'IOT. De plus, La légerté du protocole permet  l'implémenter sur quasiment n'importe quoi (L'exemple donné par oasis est un controlleur avec 256KB de Ram)
+MQTT (Message Queuing Telemetry Transport) est donc très intéresant pour l'IOT. La légerté du protocole permet  l'implémenter sur quasiment n'importe quoi (L'exemple donné par oasis est un controlleur avec 256KB de Ram)\\
+Le protocole MQTT a pour architecture un mode client serveur. Les clients sera nos Objets, et le serveur (communement appellé Broker) aura pour role de recevoir les informations envoyé par chacun de nos objets ainsi que de s'assurer que les informations demandé par les objets seront bien envoyés.
+
+\subsection{Un client MQTT}
+ Comme vu dans l'introduction, un client MQTT a pour objectif de soit envoyé des données, soit en recevoir. Pour cela, MQTT utilise un systeme de TOPIC. L'idée est donc d'avoir differents Topics sur le Broker, où l'on va pouvoir parlé avec notre objet, ecouter, ou faire les deux en meme temps.\\
+ Pour mieux comprendre, on peut imaginer la situation suivante:\\
+ On dispose d'objet qui sont capable de mesurer la temperatures et tous connecter au meme Broker MQTT.
+ On decide d'une logique dans nos topics et ainsi:
+ \begin{itemize}
+  \item L'objet present sur le toit de l'IUT ecrira sur le topic /capteurs/temperatures/toit
+  \item L'objet dans le hall, sur le topic /capteurs/temperatures/hall
+ \end{itemize}
+Maintenant, imaginon un systeme de Climatisation qui utilise nos capteurs pour réguler la temperatures. Pour qu'il puisse récuperrer les informations de nos capteurs, il lui suffira de s'abonner a nos topics. Dès que le topic sera mis a jour, il recevra le nouveau message.
+Ici, on a que deux capteurs, et s'abonner un a un à ceux ci est concevable. Mais imaginons que nous avons 2000 capteurs, cela les beaucoup moins. MQTT etant pensé dans une optique de Scalabilité, il est possible de :
+\begin{itemize}
+ \item D'écrire sur des topics qui n'existe pas encore et il sera crée. (exemple: Je rajoute un capteur dans la BU, il pourra ecrire sans configuration sur le broker dans /capteurs/temperatures/bu
+ \item S'abonner a des groupes de topics. Si on a aussi des capteurs de pression par exemple qui ecrive dans /capteurs/pression/lieux , on peut s'abonner a tous les topics qui parlent pression comme ceci : /capteurs/pression/+ ou si l'on veut tous les capteurs du hall, /capteurs/+/hall
+ 
+\end{itemize}
+
+
+
+
+
+
+\subsection{Le Broker}
+Important: Le role du Broker n'est pas de stocker les données. On pourra utilisé une base de donné pour ceci. Cela n'est pas un problème. On peut considérer que le Broker ne sera pas une machine avec des capacités de calculs réduites contrairement a un Objets.\\
+L'idée de fonctionnement est simple, et repose sur le principe de topic.  
+
 
 
 
