@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{graphicx}
 %opening
 \title{Le Protocole MQTT}
 \author{Nicolas Vadkerti}
@@ -83,15 +84,32 @@ Ici, on a que deux capteurs, et s'abonner un a un à ceux ci est concevable. Mai
 
 
 \subsection{Le Broker}
-Important: Le role du Broker n'est pas de stocker les données. On pourra utilisé une base de donné pour ceci. Cela n'est pas un problème. On peut considérer que le Broker ne sera pas une machine avec des capacités de calculs réduites contrairement a un Objets.\\
+Important: Le role du Broker n'est pas de stocker les données. On pourra utilisé une base de donné pour ceci. Cela n'est pas un problème. On peut considérer que le Broker ne sera pas une machine avec des capacités de calculs réduites contrairement a un Objets. Pour sauvegardé les mesages, il nous suffira d'avoir un client MQTT abonné a tous les topics qui remplira une BDD\\
 Le rôle du Broker est de s'assurer de recevoir les messages publiés, ainsi que les transmettres aux abonnés. Pour cela, la notion de QoS est important pour déterminer sont comportement. 
 \begin{itemize}
  \item Le message est envoyé avec pour QoS voulu 0\\
- Quand le broker recoit un message avec pour QoS 0, le mode par default, il ne doit renvoyé qu'une fois le message aux abonnés du topic. Il ne s'attend pas a recevoir d'accusé de récéption. On parle aussi de Best-Effort.
+ Quand le broker recoit un message avec pour QoS 0, le mode par default, il ne doit renvoyé qu'une fois le message aux abonnés du topic. Il ne s'attend pas a recevoir d'accusé de récéption. On parle aussi de Best-Effort. On peut donc utilisé ce mode quand notre lien entre le client et le Broker est stable (Par exemple un cable ethernet)
  \item Le message est envoyé avec pour QoS voulu 1\\
- Le broker va envoyé le message tant que il n'aura pas recu d'accusé de récéption. 
+ Le broker va envoyé le message tant que il n'aura pas recu d'accusé de récéption. Evidement, le probleme est que l'application doit etre programmé avec la possibilité de recevoir de fois le meme message, et donc etre capable de le détécter. Ce mode est a priviligié lorsque nous voulons etre sur de recevoir au moins une fois notre message. 
+ \item Le message est envoyé avec pour QoS voulu 2
+  C'est le mode qui s'assure que le destinataire recoit qu'une seul fois le message. L'expediteur du message va attendre en premier lieux un accusé de récéption, ce paquet lui indique qu'il peut detruire la donné qu'il a envoyé. Il envoie donc un message au receveur pour confirmé la destruction du paquet et l'emeteur fais de meme.
+  \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.250]{qos.jpg}
+\caption{QoS 3}
+\label{fig:qos}
+\end{figure}
+
+Evidement, le soucis est que ce niveau de QoS est plus couteux, en temps, bande passante, etc ... Ce niveau de QoS est donc a utilisé lors de cas très particulier, où l'on ne peut pas ce permettre de a la fois perdre un paquet,  ou le reexpedier.
+
 \end{itemize}
 
+Nous n'en avons pas encore parler, cependant, il y a une notion de connection dans le protocole MQTT. En effet, un client, qui est abonné a un topic, mais qui n'est pas connecté va quand meme recevoir les messages noter avec pour QoS 1 et 2. Le Broker va bufferiser les messages a destination du client le temps qu'il soit connecté.
+
+
+\section{Echange de trames Elementaires}
+
+Pour cette partie, nous allons analyser quelques trames  communes du protocole MQTT.
 
 
 
@@ -102,6 +120,8 @@ Le rôle du Broker est de s'assurer de recevoir les messages publiés, ainsi que
 \begin{itemize}
  \item \url{https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=mqtt}
  \item \url{https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/}
+ \item \url{http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/errata01/os/mqtt-v3.1.1-errata01-os-complete.html#_Toc442180841}
+ \item \underline{Hands-On Internet of Things with MQTT} Author(s): Pulver, Tim Publisher: Packt Publishing Pub. Date: 2019
 \end{itemize}
 
 
