@@ -84,7 +84,14 @@ Ici, on a que deux capteurs, et s'abonner un a un à ceux ci est concevable. Mai
 
 \subsection{Le Broker}
 Important: Le role du Broker n'est pas de stocker les données. On pourra utilisé une base de donné pour ceci. Cela n'est pas un problème. On peut considérer que le Broker ne sera pas une machine avec des capacités de calculs réduites contrairement a un Objets.\\
-L'idée de fonctionnement est simple, et repose sur le principe de topic.  
+Le rôle du Broker est de s'assurer de recevoir les messages publiés, ainsi que les transmettres aux abonnés. Pour cela, la notion de QoS est important pour déterminer sont comportement. 
+\begin{itemize}
+ \item Le message est envoyé avec pour QoS voulu 0\\
+ Quand le broker recoit un message avec pour QoS 0, le mode par default, il ne doit renvoyé qu'une fois le message aux abonnés du topic. Il ne s'attend pas a recevoir d'accusé de récéption. On parle aussi de Best-Effort.
+ \item Le message est envoyé avec pour QoS voulu 1\\
+ Le broker va envoyé le message tant que il n'aura pas recu d'accusé de récéption. 
+\end{itemize}
+
 
 
 
@@ -94,6 +101,7 @@ L'idée de fonctionnement est simple, et repose sur le principe de topic.
 
 \begin{itemize}
  \item \url{https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=mqtt}
+ \item \url{https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/}
 \end{itemize}
 
 
