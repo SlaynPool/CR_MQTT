@@ -118,9 +118,20 @@ Pour cette partie, nous allons analyser quelques trames  communes du protocole M
 \caption{Un paquet MQTT}
 \label{fig:paquet}
 \end{figure}
-Comme on peut le voir seul 
+Comme on peut le voir, seul les deux premiers parties d'un paquet sont obligatoire pour que MQTT.
+\begin{itemize}
+ \item La partie Control Header sur 1 octets qui a pour fonction d'annocer le but du paquet.\\
+ \begin{itemize}
+            \item Par exemple, l'on veut se connecter a un broker il  prendra la valeur 1, en binaire le champs type de paquet  sera :\\
+                    |0001|
+            \item Le flags sera donc |0000| pour signaler que c'est une tentative de connection.
+ \end{itemize}
+Le contenu du paquet sera donc |0001 0000| pour une tentative de connection.
+Si on suit correctement le shema, le serveur va donc lui repondre par une trame CONNACK (acceptation de connection) |0010 0000|
 
-\subsection{Une demande de connection d'un client à un brocker}
+\item 
+\end{itemize}
+
 
 
 
@@ -132,6 +143,7 @@ Comme on peut le voir seul
  \item \url{https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/}
  \item \url{http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/errata01/os/mqtt-v3.1.1-errata01-os-complete.html#_Toc442180841}
  \item \underline{Hands-On Internet of Things with MQTT} Author(s): Pulver, Tim Publisher: Packt Publishing Pub. Date: 2019
+ \item \url{https://www.oreilly.com/library/view/internet-of-things/9781788470599/6078c828-0f58-4cdc-8275-fadb0eae40f4.xhtml}
 \end{itemize}
 
 
