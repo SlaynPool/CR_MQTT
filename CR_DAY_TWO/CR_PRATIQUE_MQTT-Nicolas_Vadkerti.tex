@@ -2,6 +2,7 @@
 \documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
+\usepackage{listings}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{hyperref}
 %opening
@@ -72,7 +73,20 @@ On verifie que le broker fonctionne bien :
  Cette partie sera donc consacrée à comment nous allons récupérer les infos envoyer sur notre broker et comment nous allons les stocker. Il est sans doute bon de rappeller que le broker MQTT n'a pas pour rôle de stocker les données mais seulement de s'assurer de les livrers aux subscribers du topic. \\
  En pratique, si nous voulons stocker les données émis par nos capteurs, il faut que nous ayons un ``script/programme/plugin'' qui soit capable de se subcribe à tous les topics qui nous interesse, et faire les bonnes requetes SQL sur la bonne Base de Donnés pour les stocker 
  \subsection{Choix et déploiment de la base de Donnée}
- Nous voulons faire de l'IOT, on peut facilement supposer que nous allons potentiellement émettre beaucoup de petites données qui auront de la cohérence en fonction du temps. Un produit repondant à ce besoin éxiste et s'appelle InfluxDB 
+ Nous voulons faire de l'IOT, on peut facilement supposer que nous allons potentiellement émettre beaucoup de petites données qui auront de la cohérence en fonction du temps. Un produit repondant à ce besoin éxiste et s'appelle InfluxDB. 
+\begin{lstlisting}
+InfluxDB is an open-source time series database (TSDB) developed by InfluxData.
+It is written in Go and optimized for fast, high-availability storage and retrieval of
+time series data in fields such as operations monitoring, application metrics, Internet
+of Things sensor data, and real-time analytics. 
+
+                            source: Wikipedia 
+\end{lstlisting}
+\subsubsection{Déploiment de InfluxDB}
+Pour cela, j'ai suivi la documentation disponible sur le site de InfluxDB
+\insertcode{commande/installinflux.txt}{Installation de InfluxDB}
+De plus, pour pouvoir interagir avec notre base :
+\insertcode{commande/installclient.txt}{Installation du client}
 
 
 
