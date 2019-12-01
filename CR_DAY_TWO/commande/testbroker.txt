@@ -1,0 +1,8 @@
+# On publie sur le broker :
+MonBroker$:mosquitto_pub -h localhost -t un/topic -m "HelloWorld"
+
+# On ecoute le topic :
+
+UnsubDuBroker $:mosquitto_sub -h 192.168.1.82 -t un/topic
+HelloWorld
+

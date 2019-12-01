@@ -1,0 +1,80 @@
+
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{hyperref}
+%opening
+\title{Le Protocole MQTT}
+\author{Nicolas Vadkerti}
+\usepackage{listings} % Required for inserting code snippets
+\usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
+
+\definecolor{DarkGreen}{rgb}{0.0,0.4,0.0} % Comment color
+\definecolor{highlight}{RGB}{255,251,204} % Code highlight color
+
+\lstdefinestyle{Style1}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
+language=Perl, % Detects keywords, comments, strings, functions, etc for the language specified
+backgroundcolor=\color{highlight}, % Set the background color for the snippet - useful for highlighting
+basicstyle=\footnotesize\ttfamily, % The default font size and style of the code
+breakatwhitespace=false, % If true, only allows line breaks at white space
+breaklines=true, % Automatic line breaking (prevents code from protruding outside the box)
+captionpos=b, % Sets the caption position: b for bottom; t for top
+commentstyle=\usefont{T1}{pcr}{m}{sl}\color{DarkGreen}, % Style of comments within the code - dark green courier font
+deletekeywords={}, % If you want to delete any keywords from the current language separate them by commas
+%escapeinside={\%}, % This allows you to escape to LaTeX using the character in the bracket
+firstnumber=1, % Line numbers begin at line 1
+frame=single, % Frame around the code box, value can be: none, leftline, topline, bottomline, lines, single, shadowbox
+frameround=tttt, % Rounds the corners of the frame for the top left, top right, bottom left and bottom right positions
+keywordstyle=\color{Blue}\bf, % Functions are bold and blue
+morekeywords={}, % Add any functions no included by default here separated by commas
+numbers=left, % Location of line numbers, can take the values of: none, left, right
+numbersep=10pt, % Distance of line numbers from the code box
+numberstyle=\tiny\color{Gray}, % Style used for line numbers
+rulecolor=\color{black}, % Frame border color
+showstringspaces=false, % Don't put marks in string spaces
+showtabs=false, % Display tabs in the code as lines
+stepnumber=5, % The step distance between line numbers, i.e. how often will lines be numbered
+stringstyle=\color{Purple}, % Strings are purple
+tabsize=2
+}
+
+\newcommand{\insertcode}[2]{\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1,style=Style1]{#1}\end{itemize}} 
+
+
+% \insertcode{"Scripts/example.pl"}{Nena would be proud.} 
+
+\begin{document}
+
+\maketitle
+
+
+\url{https://github.com/SlaynPool/CR_MQTT/}
+
+
+\section{Le but de la seance}
+Comme vu dans le compte rendu de la premier journée:
+\url{https://github.com/SlaynPool/CR_MQTT/blob/master/CR_DAY_ONE/MQTT.pdf}
+nous savons comment fonctionne le Protocole MQTT. Le but aujourd'hui est donc de mettre en place une infrastructure complete utilisant ce protocole.\\
+Ainsi, nous allons déployer un broker MQTT, une base de donnée adapté aux besoins de l'IOT et un moyen de visualiser les données de la Base de donnée.
+\section{Le broker MQTT}
+Pour cette partie, nous allons utiliser Mosquito \url{https://mosquitto.org/}\\
+Je n'ai pas configurer de mots de passe pour l'accés à notre broker ce qui fais que je n'ai pas eu a configurer le broker.
+A noter,  tous les machines que nous allons utiliser dans ce CR seront des Debian 10.
+\insertcode{commande/installBroker.txt}{Installation du broker}
+On verifie que le broker fonctionne bien :
+
+ \insertcode{commande/testbroker.txt}{Test du broker}
+ 
+ 
+ \section{La base de donnée}
+ 
+ Cette partie sera donc consacrée à comment nous allons récupérer les infos envoyer sur notre broker et comment nous allons les stocker. Il est sans doute bon de rappeller que le broker MQTT n'a pas pour rôle de stocker les données mais seulement de s'assurer de les livrers aux subscribers du topic. \\
+ En pratique, si nous voulons stocker les données émis par nos capteurs, il faut que nous ayons un ``script/programme/plugin'' qui soit capable de se subcribe à tous les topics qui nous interesse, et faire les bonnes requetes SQL sur la bonne Base de Donnés pour les stocker 
+ \subsection{Choix et déploiment de la base de Donnée}
+ Nous voulons faire de l'IOT, on peut facilement supposer que nous allons potentiellement émettre beaucoup de petites données qui auront de la cohérence en fonction du temps. Un produit repondant à ce besoin éxiste et s'appelle InfluxDB 
+
+
+
+\end{document}
+

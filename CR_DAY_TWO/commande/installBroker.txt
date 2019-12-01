@@ -1,0 +1,15 @@
+apt-get install mosquitto
+#outils pour publier et s'abonner aux topics MQTT
+apt-get install mosquitto-clients
+systemctl status mosquitto
+ mosquitto.service - Mosquitto MQTT v3.1/v3.1.1 Broker
+   Loaded: loaded (/lib/systemd/system/mosquitto.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2019-12-01 21:53:13 CET; 5s ago
+     Docs: man:mosquitto.conf(5)
+           man:mosquitto(8)
+ Main PID: 1373 (mosquitto)
+    Tasks: 1 (limit: 1147)
+   Memory: 1.0M
+   CGroup: /system.slice/mosquitto.service
+           -1373 /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
+
