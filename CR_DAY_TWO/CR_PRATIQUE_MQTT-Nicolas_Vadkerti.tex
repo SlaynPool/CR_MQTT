@@ -87,8 +87,19 @@ Pour cela, j'ai suivi la documentation disponible sur le site de InfluxDB
 \insertcode{commande/installinflux.txt}{Installation de InfluxDB}
 De plus, pour pouvoir interagir avec notre base :
 \insertcode{commande/installclient.txt}{Installation du client}
+note: J'ai supprimer la VM entre la realisation des manipulations en cours et la redaction du compte rendu, j'ai donc recommemencé les manipulations sur une autre machines d'où l'incohérence des promptes
+On verifie que l'on peut bien accéder à notre base :
+\insertcode{commande/influx.txt}{accées à la base}
 
-
+\section{Télégraf}
+Nous allons maintenant nous intérésser à un outils très pratiques qui est Télégraf. En effet, il sert à lier notre base de données InfluxDB à differentes téchnologie, et dans notre cas present, un broker MQTT, aux travers de ``plugins'' dont une bonne partie est près installé . Son rôle va donc de se subcribe aux topics de notre broker, et de stocker les données dans la base. 
+\subsection{Déploiment de Télégraf}
+source: \url{https://portal.influxdata.com/downloads/}
+\insertcode{commande/telegraf.txt}{Déploiment de télégraf}
+Et pour ce qui est de la configuration : La commande diff n'est pas de moi mais trouvé sur internet. 
+\insertcode{commande/telegrafconf.txt}{Configuration de télégraf}
+J'ai donc configuré télégraf pour qu'il se subscribe à differents topics MQTT, et lui est préciser quelle type de valeurs il devait attendre.
+Si on regarde dans notre base de donnés, il doit y avoir les données que nous donnons au broker:
 
 \end{document}
 

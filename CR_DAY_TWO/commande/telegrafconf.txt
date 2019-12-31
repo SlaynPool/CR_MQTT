@@ -1,0 +1,23 @@
+root@debian:/etc/telegraf# diff telegraf.conf telegraf.conf.old -i -b -B --ignore-file-name-case --ignore-case -a --new-line-format='%dn [suppression] %L' --old-line-format='%dn [ajout] %L' --unchanged-line-format='' 
+112 [ajout]    urls = ["http://127.0.0.1:8086"]
+112 [suppression]   # urls = ["http://127.0.0.1:8086"]
+116 [ajout]   database = "mesure"
+116 [suppression]   # database = "telegraf"
+5432 [ajout]  [[inputs.mqtt_consumer]]
+5432 [suppression] # [[inputs.mqtt_consumer]]
+5435 [ajout]    servers = ["tcp://127.0.0.1:1883"]
+5435 [suppression] #   servers = ["tcp://127.0.0.1:1883"]
+5438 [ajout]    topics = [
+5439 [ajout]      "telegraf/host01/cpu",
+5440 [ajout]      "telegraf/+/mem",
+5441 [ajout]      "sensor/#",
+5442 [ajout]    ]
+5438 [suppression] #   topics = [
+5439 [suppression] #     "telegraf/host01/cpu",
+5440 [suppression] #     "telegraf/+/mem",
+5441 [suppression] #     "sensors/#",
+5442 [suppression] #   ]
+5495 [ajout]    data_format = "value"
+5496 [ajout]    data_type = "float"
+5495 [suppression] #   data_format = "influx"
+
