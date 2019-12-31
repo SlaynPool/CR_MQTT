@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage{listings}
+\usepackage{graphicx}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{hyperref}
 %opening
@@ -99,7 +100,41 @@ source: \url{https://portal.influxdata.com/downloads/}
 Et pour ce qui est de la configuration : La commande diff n'est pas de moi mais trouvé sur internet. 
 \insertcode{commande/telegrafconf.txt}{Configuration de télégraf}
 J'ai donc configuré télégraf pour qu'il se subscribe à differents topics MQTT, et lui est préciser quelle type de valeurs il devait attendre.
-Si on regarde dans notre base de donnés, il doit y avoir les données que nous donnons au broker:
+Si on regarde dans notre base de donnés, il doit y avoir les données que nous donnons au broker, ici un Raspberry connécter à un accelerometre qui envoie les valeurs de celui-ci:
+\insertcode{commande/pow.txt}{Preuve que Télégraf fonctionne}
+
+
+\section{Visualiser les données}
+Nous sommes capables d'éméttre nos données, nous somme capable de les stocker, il nous reste donc plus qu'a les visualiser via une interface Web par exemple. Une solution très efficase et bien documenté est Grapfana. Grapfana est capable de se connécter à une base Influxdb et de générer des graphiques à partir de celui-ci.
+\subsection{Déploiment de grafana}
+source: \url{https://grafana.com/docs/grafana/latest/installation/debian/}
+\insertcode{commande/grafanainstall.txt}{installation de grafana}
+On peut donc verifier que grafana fonctionne bien:
+  \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.30]{screen/1.jpg}
+\caption{Interface}
+\label{fig:net }
+\end{figure}
+\\On peut donc ce connecter avec les mots de passes par default: `` admin'' ``admin`` et configurer les data sources comme ceci dans notre cas:
+  \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.50]{screen/2.jpg}
+\caption{Network Schema}
+\label{fig:net }
+\end{figure}
+\\On sauvegrade celle-ci. Quand nous sauvegardons, il grafana essaye desuite de ce connecter à la base de donné donc nous savons directement si elle est correctement configuré ou non. \newpage 
+
+Des lors, nous pouvons configurer nos nouveaux dashboards comme ci dessous:
+  \begin{figure}[h!]
+\centering
+\includegraphics[scale=0.50]{screen/3.jpg}
+\caption{Network Schema}
+\label{fig:net }
+\end{figure}
+\\ Il suffit de lui donner les bonnes requetes (ce qui via l'interface est très intuitif par ailleur) et il génére le grafique qui va bien. 
+
+
 
 \end{document}
 

@@ -1,0 +1,37 @@
+root@debian:/etc/telegraf# influx
+Connected to http://localhost:8086 version 1.6.4
+InfluxDB shell version: 1.6.4
+> SHOW DATABASES
+name: databases
+name
+----
+_internal
+telegraf
+mesure
+> USE mesure
+Using database mesure
+> SHOW MEASUREMENTS
+name: measurements
+name
+----
+cpu
+disk
+diskio
+kernel
+mem
+mqtt_consumer
+processes
+swap
+system
+> SELECT * FROM mqtt_consumer
+name: mqtt_consumer
+time                host   topic                 value
+----                ----   -----                 -----
+1576507420189291721 debian sensor/accelero/roll  341.7
+1576507420189807876 debian sensor/accelero/pitch 359.2
+1576507420189873525 debian sensor/accelero/yaw   360
+1576507421214200158 debian sensor/accelero/roll  341.7
+1576507421214733488 debian sensor/accelero/pitch 359.2
+1576507421214830379 debian sensor/accelero/yaw   360
+1576507422267303102 debian sensor/accelero/roll  341.7
+
